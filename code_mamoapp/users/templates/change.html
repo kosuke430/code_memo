@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+    <section id="error_update">
+        <div class="container my-3">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>メモ更新</h4>
+                        </div>
+                        <div class="card-body">    
+                            <h5>メモを確認・変更します</h5>
+                            <br>
+                            <form method="POST">
+                                {{ form.hidden_tag() }}
+                                <div class="mb-3">
+                                    <p>プログラミング言語</p>
+                                    {{render_field(form.language,class="form-control form-control-lg",placeholder="プログラミング言語")}}
+                                </div>
+                                <div class="mb-3">
+                                    <p>件名</p>
+                                    {{render_field(form.error_name,class="form-control form-control-lg",placeholder="件名")}}
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-cintrol-label">メモ内容</label>
+                                    {{render_field(form.error_content,class="form-control form-control-lg",placeholder="エラー内容")}}
+                                    <script>
+                                        CKEDITOR.replace('error_content')
+                                    </script>
+                                </div>
+                                {{ form.submit(class="btn btn-secondary w-100",value="更新")}}
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="delete">
+        <div class="container my-3 py-4 bg-light">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#del_modal">
+                        削除
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="del_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">削除確認</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>このメモを削除しますか？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <form action="{{url_for('problems.delete_problem',change_id=form.id)}}" method="POST">
+                        <input type="submit" class="btn btn-danger" value="削除">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

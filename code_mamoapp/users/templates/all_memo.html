@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <header>
+    <div class="container my-3 py-3 bg-light">
+        <div class="row">
+            <div class="col-md-6 m-auto text-center">
+                <h1>メモ一覧</h1>
+            </div>
+        </div>
+
+    </div>
+   </header>
+
+   <div class="container my-3 py-3 bg-light">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="{{url_for('problems.add_memo')}}" class="btn btn-primary w-100">
+                メモ追加
+            </a>
+        </div>
+    </div>  
+   </div>
+   <div class="container my-3 py-3 bg-light">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <h4>メモ一覧</h4>
+                </div>
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                言語
+                            </th>
+                            <th>
+                                件名
+                            </th>
+                            <th>
+                                変更
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for problem in problems.items %}
+                        <tr>
+                            <td>
+                                {{problem.id}}
+                            </td>
+                            <td>
+                                {{ problem.language }}
+                            </td>
+                            <td>
+                                {{ problem.error_name }}
+                            </td>
+                            <td>
+                               <a href="{{ url_for('problems.change_form',change_id=problem.id) }}" class="btn btn-secondary">
+                                確認/変更
+                               </a>
+                            </td> 
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+              </div>
+        </div>   
+    </div>  
+   </div>
+   <nav aria-label="Page navigation" class="my-2">
+    <ul class="pagination justify-content-center">
+      <li {% if problems.has_prev %}class="page-item"{% else %} class="page-item disabled"{% endif %}><a class="page-link" href="{% if problems.has_prev %}{{url_for('problems.all_memo',page=problems.prev_num)}}{% else %}#{% endif %}">前へ</a></li>
+      
+        {% for page_num in problems.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+            {% if page_num %}
+                {% if problems.page==page_num %}
+                    <li class="page-item disabled"><a class="page-link" href="#">{{page_num}}</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{{url_for('problems.all_memo',page=page_num)}}">{{page_num}}</a></li>
+                {% endif %}
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">&hellip;</a></li>
+            {% endif %} 
+        {% endfor %}
+
+
+      <li {% if problems.has_next %}class="page-item"{% else %}class="page-item disabled"{% endif %}><a class="page-link" href="{% if problems.has_next %}{{url_for('problems.all_memo',page
+        =problems.next_num)}}{% else %}#{% endif %}">次へ</a></li>
+    </ul>
+  </nav>
+
+
+{% endblock %}
