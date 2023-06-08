@@ -1,6 +1,6 @@
 # code_memo
 
-pythonのflaskとhtmlとcssのフレームワークBootstrapを使ってメモ帳をwebアプリケーションに開発しました
+pythonのflaskとhtmlとcssのフレームワークBootstrapを使ってコードのメモ帳をwebアプリケーションに開発しました
 
 # 実行環境
 flask==2.0.3
